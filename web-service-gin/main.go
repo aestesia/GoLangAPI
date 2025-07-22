@@ -1,6 +1,12 @@
 package main
 
-//album represents data about a record album
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+// album represents data about a record album
 type album struct {
 	ID     string  `json: "id"`
 	Title  string  `json: "title"`
@@ -15,5 +21,13 @@ var albums = []album{
 }
 
 func main() {
+	router := gin.Default()
+	router.GET("/albums", getAlbums)
 
+	router.Run()
+}
+
+// get All Albums as JSON
+func getAlbums(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, albums)
 }
